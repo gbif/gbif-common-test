@@ -1,0 +1,159 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.gbif</groupId>
+    <artifactId>motherpom</artifactId>
+    <version>7</version>
+  </parent>
+
+  <groupId>org.gbif</groupId>
+  <artifactId>gbif-common-test</artifactId>
+  <version>0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>GBIF Common :: Tests</name>
+  <description>Utilities for tests common to all projects</description>
+  <url>http://sites.gbif.org/common-resources/gbif-common-test</url>
+
+  <properties>
+    <!-- Logging -->
+    <slf4j-api.version>1.6.4</slf4j-api.version>
+    <slf4j.version>1.6.4</slf4j.version>
+    <!-- Unit testing -->
+    <junit.version>4.10</junit.version>
+    <!-- Google Guice -->
+    <guice.version>3.0</guice.version>
+    <bonecp.version>0.7.1.RELEASE</bonecp.version>
+    <!-- JSR305 Annotations for Findbugs -->
+    <jsr305.version>1.3.9</jsr305.version>
+    <!-- Liquibase plugin -->
+    <liquibase-maven-plugin.version>2.0.1</liquibase-maven-plugin.version>
+    <!-- Other -->
+    <dbunit.version>2.4.8</dbunit.version>
+  </properties>
+
+  <scm>
+    <connection>scm:svn:http://gbif-common-resources.googlecode.com/svn/gbif-common-test/trunk</connection>
+    <developerConnection>scm:svn:https://gbif-common-resources.googlecode.com/svn/gbif-common-tes/trunk</developerConnection>
+    <url>http://code.google.com/p/gbif-common-resources/source/browse/#svn/gbif-common-test/trunk</url>
+  </scm>
+  
+  <issueManagement>
+    <system>Google Code</system>
+    <url>http://code.google.com/p/gbif-common-resources/issues/list</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>jenkins</system>
+    <url>http://builds.gbif.org/job/gbif-common-test</url>
+  </ciManagement>
+
+  <distributionManagement>
+    <site>
+      <id>gbif-site</id>
+      <name>Site for the project</name>
+      <url>scp://tools.gbif.org:/var/www/html/sites/common-resources/gbif-common-test</url>
+    </site>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>gbif-all</id>
+      <url>http://repository.gbif.org/content/groups/gbif</url>
+    </repository>
+  </repositories>  
+
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <!--Google Guice -->
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
+      <exclusions>
+        <!-- superceded by guava and causing exceptions under tomcat6 -->
+        <!-- java.lang.NoSuchMethodError com.google.common.collect.ImmutableList.copyOf(Ljava/util/Collection;) -->
+        <exclusion>
+          <groupId>com.google.code.google-collections</groupId>
+          <artifactId>google-collect</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Persistence -->
+    <dependency>
+      <groupId>com.jolbox</groupId>
+      <artifactId>bonecp-provider</artifactId>
+      <version>${bonecp.version}</version>
+    </dependency>
+
+    <!-- Unit testing/Mocking framework -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-api.version}</version>
+    </dependency>
+
+    <!-- JSR305 Annotations for Findbugs -->
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>${jsr305.version}</version>
+    </dependency>
+
+    <!-- Liquibase DB Change Management version -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-maven-plugin</artifactId>
+      <version>${liquibase-maven-plugin.version}</version>
+    </dependency>
+
+    <!-- DBUnit -->
+    <dependency>
+      <groupId>org.dbunit</groupId>
+      <artifactId>dbunit</artifactId>
+      <version>${dbunit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- sl4j -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+</project>
