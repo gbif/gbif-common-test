@@ -59,7 +59,6 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
   /**
    * @param moduleClass the class of the Guice Module to use
    * @param propertiesFile the properties file to read the configuration details from
-   * @param serviceClass the class for the service we want to wire up and test
    * @param propertyPrefix the prefix used to retrieve the db connections in the properties. E.g.
    *        {@code occurrencestore.db}
    * @param dbUnitFileName the optional unqualified filename within the dbUnit package to be used in setting up the db
