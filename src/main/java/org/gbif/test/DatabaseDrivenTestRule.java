@@ -7,7 +7,6 @@ import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
 
@@ -24,6 +23,7 @@ import liquibase.Liquibase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import org.apache.commons.io.FileUtils;
 import org.dbunit.DefaultDatabaseTester;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -159,7 +159,7 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
     ((BoneCPDataSource) dataSource).close();
 
     if (tempDir != null && tempDir.exists()) {
-      Files.deleteRecursively(tempDir);
+      FileUtils.deleteDirectory(tempDir);
     }
   }
 
