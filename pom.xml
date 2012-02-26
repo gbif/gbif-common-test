@@ -31,7 +31,7 @@
     <!-- Liquibase -->
 	<liquibase.version>2.0.1</liquibase.version>
     <!-- Guava -->
-    <guava.version>10.0.1</guava.version>	
+    <guava.version>11.0.1</guava.version>
     <!-- Other -->
     <dbunit.version>2.4.8</dbunit.version>
   </properties>
