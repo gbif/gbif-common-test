@@ -156,7 +156,9 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
       connection.close();
     }
 
-    ((BoneCPDataSource) dataSource).close();
+    if (dataSource instanceof BoneCPDataSource) {
+      ((BoneCPDataSource) dataSource).close();
+    }
 
     if (tempDir != null && tempDir.exists()) {
       FileUtils.deleteDirectory(tempDir);
