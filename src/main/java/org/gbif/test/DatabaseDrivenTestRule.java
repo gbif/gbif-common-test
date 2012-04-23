@@ -49,6 +49,8 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
   private Connection connection;
   private DefaultDatabaseTester databaseTester;
   protected DataSource dataSource;
+  private final Class<T> serviceClass;
+  private T service;
 
   private final Class<? extends Module> moduleClass;
   private final String propertiesFile;
@@ -58,17 +60,20 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
 
   /**
    * @param moduleClass the class of the Guice Module to use
+   * @param serviceClass   the class for the service we want to wire up and test
    * @param propertiesFile the properties file to read the configuration details from
    * @param propertyPrefix the prefix used to retrieve the db connections in the properties. E.g.
    *        {@code occurrencestore.db}
    * @param dbUnitFileName the optional unqualified filename within the dbUnit package to be used in setting up the db
    */
-  public DatabaseDrivenTestRule(Class<? extends Module> moduleClass, String propertiesFile, String propertyPrefix,
-    @Nullable String dbUnitFileName, Map<String, Object> dbUnitProperties) {
+  public DatabaseDrivenTestRule(Class<? extends Module> moduleClass, @Nullable Class<T> serviceClass,
+    String propertiesFile, String propertyPrefix, @Nullable String dbUnitFileName,
+    Map<String, Object> dbUnitProperties) {
     this.propertiesFile = propertiesFile;
     this.propertyPrefix = Strings.nullToEmpty(propertyPrefix).trim();
     // TODO: can we use annotations to change the dbunit file name on every test method?
     this.dbUnitFileName = dbUnitFileName;
+    this.serviceClass = serviceClass;
     this.moduleClass = moduleClass;
     this.dbUnitProperties = ImmutableMap.copyOf(dbUnitProperties);
   }
@@ -101,6 +106,11 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
     Injector injector = Guice.createInjector(c.newInstance(properties));
 
     dataSource = injector.getInstance(DataSource.class);
+    if (serviceClass == null) {
+      service = null;
+    } else {
+      service = injector.getInstance(serviceClass);
+    }
 
     connection = dataSource.getConnection();
 
@@ -196,4 +206,7 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
     }
   }
 
+  public T getService() {
+    return service;
+  }
 }
