@@ -59,11 +59,11 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
   private final Map<String, Object> dbUnitProperties;
 
   /**
-   * @param moduleClass the class of the Guice Module to use
+   * @param moduleClass    the class of the Guice Module to use
    * @param serviceClass   the class for the service we want to wire up and test
    * @param propertiesFile the properties file to read the configuration details from
    * @param propertyPrefix the prefix used to retrieve the db connections in the properties. E.g.
-   *        {@code occurrencestore.db}
+   *                       {@code occurrencestore.db}
    * @param dbUnitFileName the optional unqualified filename within the dbUnit package to be used in setting up the db
    */
   public DatabaseDrivenTestRule(Class<? extends Module> moduleClass, @Nullable Class<T> serviceClass,
@@ -106,11 +106,7 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
     Injector injector = Guice.createInjector(c.newInstance(properties));
 
     dataSource = injector.getInstance(DataSource.class);
-    if (serviceClass == null) {
-      service = null;
-    } else {
-      service = injector.getInstance(serviceClass);
-    }
+    service = serviceClass == null ? null : injector.getInstance(serviceClass);
 
     connection = dataSource.getConnection();
 
@@ -129,9 +125,11 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
 
   /**
    * Tries to read a properties file from the class path.
-   * 
+   *
    * @param propertiesFile to read
+   *
    * @return loaded properties
+   *
    * @throws IOException if the file can't be read
    */
   private Properties loadProperties(String propertiesFile) throws IOException {
