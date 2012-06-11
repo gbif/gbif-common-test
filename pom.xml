@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.gbif</groupId>
     <artifactId>motherpom</artifactId>
-    <version>7</version>
+    <version>8</version>
   </parent>
 
   <groupId>org.gbif</groupId>
@@ -18,17 +18,15 @@
   <url>http://sites.gbif.org/common-resources/gbif-common-test</url>
 
   <properties>
-    <slf4j-api.version>1.6.4</slf4j-api.version>
-    <slf4j.version>1.6.4</slf4j.version>
-    <junit.version>4.10</junit.version>
-    <guice.version>3.0</guice.version>
     <bonecp.version>0.7.1.RELEASE</bonecp.version>
-    <!-- JSR305 Annotations for Findbugs -->
-    <jsr305.version>1.3.9</jsr305.version>
-	  <liquibase.version>2.0.1</liquibase.version>
-    <guava.version>11.0.1</guava.version>
     <commons-io.version>2.3</commons-io.version>
     <dbunit.version>2.4.8</dbunit.version>
+    <guava.version>12.0</guava.version>
+    <guice.version>3.0</guice.version>
+    <slf4j.version>1.6.5</slf4j.version>
+    <jsr305.version>2.0.0</jsr305.version>
+    <junit.version>4.10</junit.version>
+    <liquibase.version>2.0.5</liquibase.version>
   </properties>
 
   <scm>
@@ -36,7 +34,7 @@
     <developerConnection>scm:svn:https://gbif-common-resources.googlecode.com/svn/gbif-common-test/trunk</developerConnection>
     <url>http://code.google.com/p/gbif-common-resources/source/browse/#svn/gbif-common-test/trunk</url>
   </scm>
-  
+
   <issueManagement>
     <system>Google Code</system>
     <url>http://code.google.com/p/gbif-common-resources/issues/list</url>
@@ -60,7 +58,7 @@
       <id>gbif-all</id>
       <url>http://repository.gbif.org/content/groups/gbif</url>
     </repository>
-  </repositories>  
+  </repositories>
 
   <build>
     <testResources>
@@ -84,75 +82,56 @@
   </build>
 
   <dependencies>
-    <!--Google Guice -->
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-      <version>${guice.version}</version>
-    </dependency>
-
-    <!-- Persistence -->
-    <dependency>
-      <groupId>com.jolbox</groupId>
-      <artifactId>bonecp-provider</artifactId>
-      <version>${bonecp.version}</version>
-    </dependency>
-
-    <!-- Unit testing/Mocking framework -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit-dep</artifactId>
-      <version>${junit.version}</version>
-    </dependency>
-
-    <!-- Logging -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j-api.version}</version>
-    </dependency>
-
-    <!-- JSR305 Annotations for Findbugs -->
-    <dependency>
-      <groupId>com.google.code.findbugs</groupId>
-      <artifactId>jsr305</artifactId>
-      <version>${jsr305.version}</version>
-    </dependency>
-
-    <!-- Liquibase DB Change Management version -->
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
-      <version>${liquibase.version}</version>
-    </dependency>
-
-    <!-- DBUnit -->
-    <dependency>
-      <groupId>org.dbunit</groupId>
-      <artifactId>dbunit</artifactId>
-      <version>${dbunit.version}</version>
-    </dependency>
-
-    <!-- sl4j -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jul-to-slf4j</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    
-    <!-- guava -->
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>${guava.version}</version>
-    </dependency>    
-
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>${commons-io.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>${jsr305.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jolbox</groupId>
+      <artifactId>bonecp-provider</artifactId>
+      <version>${bonecp.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>${junit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dbunit</groupId>
+      <artifactId>dbunit</artifactId>
+      <version>${dbunit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
