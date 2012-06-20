@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Closeables;
-import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -53,8 +52,7 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
   private T service;
 
   private final Class<? extends Module> moduleClass;
-  private final String propertiesFile;
-  private final String propertyPrefix;
+  private final Properties properties;
   private final String dbUnitFileName;
   private final Map<String, Object> dbUnitProperties;
 
@@ -62,15 +60,34 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
    * @param moduleClass    the class of the Guice Module to use
    * @param serviceClass   the class for the service we want to wire up and test
    * @param propertiesFile the properties file to read the configuration details from
-   * @param propertyPrefix the prefix used to retrieve the db connections in the properties. E.g.
+   * @param propertyPrefix the prefix used to filter the properties. E.g.
    *                       {@code occurrencestore.db}
    * @param dbUnitFileName the optional unqualified filename within the dbUnit package to be used in setting up the db
+   *
+   * @deprecated use the properties based constructor instead to harmonize all methods using properties
    */
+  @Deprecated
   public DatabaseDrivenTestRule(Class<? extends Module> moduleClass, @Nullable Class<T> serviceClass,
     String propertiesFile, String propertyPrefix, @Nullable String dbUnitFileName,
     Map<String, Object> dbUnitProperties) {
-    this.propertiesFile = propertiesFile;
-    this.propertyPrefix = Strings.nullToEmpty(propertyPrefix).trim();
+    // TODO: can we use annotations to change the dbunit file name on every test method?
+    this.dbUnitFileName = dbUnitFileName;
+    this.serviceClass = serviceClass;
+    this.moduleClass = moduleClass;
+    this.dbUnitProperties = ImmutableMap.copyOf(dbUnitProperties);
+
+    this.properties = loadProperties(propertiesFile, propertyPrefix);
+  }
+
+  /**
+   * @param moduleClass    the class of the Guice Module to use
+   * @param serviceClass   the class for the service we want to wire up and test
+   * @param properties     the properties to use as configuration details with prefixes if existing
+   * @param dbUnitFileName the optional unqualified filename within the dbUnit package to be used in setting up the db
+   */
+  public DatabaseDrivenTestRule(Class<? extends Module> moduleClass, @Nullable Class<T> serviceClass,
+    Properties properties, @Nullable String dbUnitFileName, Map<String, Object> dbUnitProperties) {
+    this.properties = properties;
     // TODO: can we use annotations to change the dbunit file name on every test method?
     this.dbUnitFileName = dbUnitFileName;
     this.serviceClass = serviceClass;
@@ -96,10 +113,6 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
 
   private void before() throws Exception {
     SLF4JBridgeHandler.install();
-
-    Properties properties = loadProperties(propertiesFile);
-
-    applyH2UrlFix(properties);
 
     // create private guice module with properties passed to constructor
     Constructor<? extends Module> c = moduleClass.getConstructor(Properties.class);
@@ -131,29 +144,28 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
    * @return loaded properties
    *
    * @throws IOException if the file can't be read
+   * @deprecated to be removed with the deprecated constructor
    */
-  private Properties loadProperties(String propertiesFile) throws IOException {
-    Properties properties = new Properties();
+  @Deprecated
+  private Properties loadProperties(String propertiesFile, String propertyPrefix) {
     InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propertiesFile);
+    Properties properties = new Properties();
     try {
-      properties.load(inputStream);
+      Properties propertiesRaw = new Properties();
+      propertiesRaw.load(inputStream);
+      Enumeration e = propertiesRaw.propertyNames();
+      while (e.hasMoreElements()) {
+        String key = (String) e.nextElement();
+        if (key.startsWith(propertyPrefix)) {
+          properties.put(key.substring(propertyPrefix.length()), propertiesRaw.get(key));
+        }
+      }
+    } catch (IOException e) {
+      throw new RuntimeException("Failed to read properties from file " + propertiesFile, e);
     } finally {
       Closeables.closeQuietly(inputStream);
     }
     return properties;
-  }
-
-  /**
-   * Applies changes to the JDBC URL if necessary.
-   * Check if we need a temporary directory. If yes we append it to the provided URL. This isn't perfect but should do
-   * for now. Otherwise we could change the JDBC URL to a template e.g. "jdbc:h2:file:${tempDir}?foo
-   */
-  private void applyH2UrlFix(Properties properties) {
-    if ("jdbc:h2:file:".equalsIgnoreCase(properties.getProperty(propertyPrefix + ".db.JDBC.url"))) {
-      tempDir = Files.createTempDir();
-      String url = properties.getProperty(propertyPrefix + ".db.JDBC.url");
-      properties.setProperty(propertyPrefix + ".db.JDBC.url", url + tempDir.getPath());
-    }
   }
 
   private void after() throws Exception {
