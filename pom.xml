@@ -20,11 +20,11 @@
     <bonecp.version>0.7.1.RELEASE</bonecp.version>
     <commons-io.version>2.3</commons-io.version>
     <dbunit.version>2.4.8</dbunit.version>
-    <guava.version>12.0</guava.version>
+    <guava.version>13.0.1</guava.version>
     <guice.version>3.0</guice.version>
     <slf4j.version>1.7.2</slf4j.version>
     <jsr305.version>2.0.0</jsr305.version>
-    <junit.version>4.10</junit.version>
+    <junit.version>4.11</junit.version>
     <liquibase.version>2.0.5</liquibase.version>
   </properties>
 
@@ -108,7 +108,7 @@
     </dependency>
     <dependency>
       <groupId>junit</groupId>
-      <artifactId>junit-dep</artifactId>
+      <artifactId>junit</artifactId>
       <version>${junit.version}</version>
     </dependency>
     <dependency>
