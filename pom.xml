@@ -9,7 +9,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>gbif-common-test</artifactId>
-  <version>0.5-SNAPSHOT</version>
+  <version>0.5</version>
   <packaging>jar</packaging>
 
   <name>GBIF Common :: Tests</name>
@@ -29,9 +29,9 @@
   </properties>
 
   <scm>
-    <connection>scm:svn:http://gbif-common-resources.googlecode.com/svn/gbif-common-test/trunk</connection>
-    <developerConnection>scm:svn:https://gbif-common-resources.googlecode.com/svn/gbif-common-test/trunk</developerConnection>
-    <url>http://code.google.com/p/gbif-common-resources/source/browse/#svn/gbif-common-test/trunk</url>
+    <connection>scm:svn:http://gbif-common-resources.googlecode.com/svn/gbif-common-test/tags/gbif-common-test-0.5</connection>
+    <developerConnection>scm:svn:https://gbif-common-resources.googlecode.com/svn/gbif-common-test/tags/gbif-common-test-0.5</developerConnection>
+    <url>http://code.google.com/p/gbif-common-resources/source/browse/#svn/gbif-common-test/tags/gbif-common-test-0.5</url>
   </scm>
 
   <issueManagement>
