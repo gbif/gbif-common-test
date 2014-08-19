@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.gbif</groupId>
     <artifactId>motherpom</artifactId>
-    <version>11</version>
+    <version>16</version>
   </parent>
 
   <groupId>org.gbif</groupId>
@@ -17,12 +17,12 @@
   <url>http://sites.gbif.org/common-resources/gbif-common-test</url>
 
   <properties>
-    <bonecp.version>0.7.1.RELEASE</bonecp.version>
-    <commons-io.version>2.3</commons-io.version>
+    <bonecp.version>0.8.0.RELEASE</bonecp.version>
+    <commons-io.version>2.4</commons-io.version>
     <dbunit.version>2.4.8</dbunit.version>
-    <guava.version>14.0.1</guava.version>
+    <guava.version>17.0</guava.version>
     <guice.version>3.0</guice.version>
-    <slf4j.version>1.7.2</slf4j.version>
+    <slf4j.version>1.7.7</slf4j.version>
     <jsr305.version>2.0.0</jsr305.version>
     <junit.version>4.11</junit.version>
     <liquibase.version>2.0.5</liquibase.version>
@@ -103,7 +103,7 @@
     </dependency>
     <dependency>
       <groupId>com.jolbox</groupId>
-      <artifactId>bonecp-provider</artifactId>
+      <artifactId>bonecp</artifactId>
       <version>${bonecp.version}</version>
     </dependency>
     <dependency>
