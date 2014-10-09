@@ -15,6 +15,7 @@ import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.name.Names;
 import com.jolbox.bonecp.BoneCPDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import liquibase.Liquibase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
@@ -118,8 +119,11 @@ public class DatabaseDrivenTestRule<T> implements TestRule {
       connection.close();
     }
 
+    // connection pools need to be properly closed!
     if (dataSource instanceof BoneCPDataSource) {
       ((BoneCPDataSource) dataSource).close();
+    } else if (dataSource instanceof HikariDataSource) {
+      ((HikariDataSource) dataSource).close();
     }
   }
 

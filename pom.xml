@@ -22,10 +22,11 @@
     <dbunit.version>2.4.8</dbunit.version>
     <guava.version>17.0</guava.version>
     <guice.version>3.0</guice.version>
-    <slf4j.version>1.7.7</slf4j.version>
+    <hikaricp.version>2.1.0</hikaricp.version>
     <jsr305.version>2.0.0</jsr305.version>
     <junit.version>4.11</junit.version>
     <liquibase.version>2.0.5</liquibase.version>
+    <slf4j.version>1.7.7</slf4j.version>
   </properties>
 
   <scm>
@@ -105,6 +106,11 @@
       <groupId>com.jolbox</groupId>
       <artifactId>bonecp</artifactId>
       <version>${bonecp.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP-java6</artifactId>
+      <version>${hikaricp.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
