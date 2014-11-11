@@ -30,29 +30,12 @@
   </properties>
 
   <scm>
-    <connection>scm:svn:http://gbif-common-resources.googlecode.com/svn/gbif-common-test/trunk</connection>
-    <developerConnection>scm:svn:https://gbif-common-resources.googlecode.com/svn/gbif-common-test/trunk</developerConnection>
-    <url>http://code.google.com/p/gbif-common-resources/source/browse/#svn/gbif-common-test/trunk</url>
+    <connection>scm:git:git@github.com:gbif/gbif-common-test.git</connection>
+    <url>https://github.com/gbif/gbif-common-test</url>
+    <developerConnection>scm:git:git@github.com:gbif/gbif-common-test.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
-
-  <issueManagement>
-    <system>Google Code</system>
-    <url>http://code.google.com/p/gbif-common-resources/issues/list</url>
-  </issueManagement>
-
-  <ciManagement>
-    <system>jenkins</system>
-    <url>http://builds.gbif.org/job/gbif-common-test</url>
-  </ciManagement>
-
-  <distributionManagement>
-    <site>
-      <id>gbif-site</id>
-      <name>Site for the project</name>
-      <url>scp://tools.gbif.org:/var/www/html/sites/common-resources/gbif-common-test</url>
-    </site>
-  </distributionManagement>
-
+  
   <repositories>
     <repository>
       <id>gbif-all</id>
